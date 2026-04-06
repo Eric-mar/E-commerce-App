@@ -6,7 +6,6 @@ function Login() {
         email?: string,
         password?: string,
         userName?: string,
-        confirmPassword?: string
     }
 
     const navigate = useNavigate()
@@ -15,8 +14,7 @@ function Login() {
     const [form , setForm] = useState({
         userName: '',
         email: '',
-        password: '',
-        confirmPassword: ''  
+        password: ''  
       })
 
 
@@ -33,17 +31,13 @@ function Login() {
         if (!form.email.includes('@')){
         err.email = 'Your email should include @'
     }
-    if (form.password !== form.confirmPassword){
-        err.password ='enter the matching password'
-    }
     if(!form.userName){
         err.userName = 'the username is required'
     }
 
 return err
 
-    }
-    
+    }  
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
@@ -60,10 +54,10 @@ return err
          const users = JSON.parse(localStorage.getItem('users') || "[]")
         const exist = users.some( u => u.email === form.email)
 
-        if(exist){
-          alert('the user arleady exist')
+        if(!exist){
+          alert('Unkown User')
             setTimeout(()=>{
-                navigate('/login')
+                navigate('/')
             },1000)
             return
         }
@@ -75,8 +69,6 @@ return err
 
     
     }
-    
-
     
 
   return (
@@ -119,22 +111,11 @@ return err
 
     <br /><br />
 
-    <label> ConfirmPasword:  </label>
-    <input type="text" 
-    className='border-2 m-4 ' 
-    onChange={handleChange}
-    value={form.confirmPassword}
-    name='confirmPassword'
-    />
-    <br />
-{error.password}
-    <br /><br />
-
 
     <button className='bg-green-600 text-white p-2 m-4 rounded-2xl hover:bg-amber-500 font-bold '
     name='submit'
     type='submit'
-    >SignUP</button>
+    >LOGIN</button>
 </form>
 
 </fieldset>
