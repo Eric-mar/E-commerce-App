@@ -1,33 +1,18 @@
-import { useEffect } from 'react'
+import { BrowserRouter, Route,Routes } from "react-router-dom"
+import SighUp from "./components/SighUp"
+import Login from "./components/Login"
 
 function App() {
-  useEffect(()=>{
-    const fetching = async() =>{
-      try {
-        const res = await fetch(`https://api.escuelajs.co/api/v1/categories`)
-        if(!res.ok){
-          throw new Error('failed to fetch!!')
-        }
-        const data = await res.json()
-        console.log(data)
-      } catch (error) { console.error(error)
-        
-      }
-    }
-     fetching()
-  },[])
-
-
   return (
-    <>
     <div>
-      {}
-
+      <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<SighUp/>} />
+        <Route path="/login" element= { <Login/>} />
+        </Routes></BrowserRouter>
+      
     </div>
-    </>
   )
 }
 
 export default App
-
-
