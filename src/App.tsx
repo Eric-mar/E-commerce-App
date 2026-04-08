@@ -1,18 +1,22 @@
 import { BrowserRouter, Route,Routes } from "react-router-dom"
-// import SighUp from "./components/SighUp"
-// import Login from "./components/Login"
+import Login from "./components/Login"
 import Home from "./components/Home"
 import Products from "./components/Products"
+import Categories from "./components/categories"
+import ProtectedRoutes  from "./context/ProtectedRoutes"
 
 function App() {
   return (
     <div>
       <BrowserRouter>
       <Routes>
-        {/* <Route path="/sighnup" element={<SighUp/>} />
-        <Route path="/login" element= { <Login/>} /> */}
-        {/* <Route path="/" element={<Home/>}/> */}
-        <Route path="/" element={<Products/>}/>
+        <Route path="/login" element= { <Login/>} />
+        <Route element={<ProtectedRoutes/>}>
+        <Route path="/" element={<Home/>}/>
+        <Route path="/categories" element={<Categories/>}/>
+        <Route path="/products" element={<Products/>}/>
+
+        </Route>
         </Routes></BrowserRouter>
       
     </div>
@@ -20,3 +24,8 @@ function App() {
 }
 
 export default App
+
+
+// beko@gmail.com
+// "uhuhax202"
+// "beko"

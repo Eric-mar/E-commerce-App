@@ -9,7 +9,7 @@ function Login() {
     }
 
     const navigate = useNavigate()
-
+    const [loading,setLoading]= useState(true)
     const [error , setError] = useState <FormErrors>({})
     const [form , setForm] = useState({
         userName: '',
@@ -34,12 +34,15 @@ function Login() {
     if(!form.userName){
         err.userName = 'the username is required'
     }
+    if(!form.password){
+        err.password= 'Password is required'
+    }
 
 return err
 
     }  
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>)=>{
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
         
 
@@ -47,24 +50,43 @@ return err
         setError(validate)
         if( Object.keys(validate).length === 0 ){
             console.log('Submit',form)
-
-
         }
+        setLoading(true)
 
-         const users = JSON.parse(localStorage.getItem('users') || "[]")
-        const exist = users.some( u => u.email === form.email)
+          try {
+     
+      const response = await fetch("https://api.escuelajs.co/api/v1/users");
+      if (!response.ok) throw new Error("Failed to fetch users");
+
+      const users = await response.json();
+      const exist = users.find(
+        (u: any) => u.email === form.email && u.password === form.password
+      )
 
         if(!exist){
-          alert('Unkown User')
-            setTimeout(()=>{
-                navigate('/')
-            },1000)
-            return
+          alert('Unkown User or wrong password')
+          setTimeout(()=>{
+            navigate('/login')
+          },1000)
+         
+            return 
+        }
+         else if(exist){
+            alert `welcome back `
+             setTimeout(()=>{
+            navigate('/categories')
+          },1000)
+          }
+    }
+        catch(error){
+           console.error("Error fetching users:", error);
+      alert("Something went wrong. Please try again later.");
+      setLoading(false)
         }
 
-        users.push(form)
-        localStorage.setItem('users',JSON.stringify(users))
-        console.log('submit',form)
+        // users.push(form)
+        // localStorage.setItem('users',JSON.stringify(users))
+        // console.log('submit',form)
         
 
     
@@ -112,7 +134,8 @@ return err
     <br /><br />
 
 
-    <button className='bg-green-600 text-white p-2 m-4 rounded-2xl hover:bg-amber-500 font-bold '
+    <button 
+    className='bg-green-600 text-white p-2 m-4 rounded-2xl hover:bg-amber-500 font-bold '
     name='submit'
     type='submit'
     >LOGIN</button>
