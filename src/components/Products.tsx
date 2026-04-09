@@ -1,29 +1,37 @@
 import  { useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink, useParams } from 'react-router-dom'
 function Products() {
     type items={
         id?: number,
-        name? : string,
-        image?: string
+        title? : string,
+        images?: string,
+        price?: number
     }
-    const [category,setCategory] = useState([])
+    const {categoryId} = useParams()
+    const [product,setProduct] = useState([])
 
     useEffect(()=>{
-        const fetchingCategory = async()=>{
+        const fetchingProduct = async()=>{
             try { 
-                const res = await fetch(`https://api.escuelajs.co/api/v1/categories`)
+             let url = 'https://api.escuelajs.co/api/v1/products'
+               if (categoryId) url += `?categoryId=${categoryId}`
+                const res = await fetch(`https://api.escuelajs.co/api/v1/categories/${categoryId}`)
                 if(!res.ok){
-                    throw new Error('Failed to fetch categories')
+                    throw new Error('Failed to fetch Products')
                 }
                 const data = await res.json()
-                setCategory(data)
+                setProduct(data)
+
                 console.log(data)
+    
+
+   
                 
             } catch (error) { console.log(error)
                 
             }
          }
-        fetchingCategory()
+        fetchingProduct()
     },[])
   
   return (
@@ -50,13 +58,18 @@ function Products() {
         
   
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {category.map((item: items)=>( 
-                    <div key={item.id} className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden">
-                        <img src={item.image} width= '200'  className="w-full h-48 object-cover" />
-                        <h1 className="text-lg font-semibold text-gray-800">{item.name}</h1>
+                {product.map((item: items)=>( 
+                    <Link to= {`/products/${item.id}`} key={item.id} >
+                  
+                    <div  className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden">
+                        <img src={item.images} width= '200'  className="w-full h-48 object-cover " />
+                        <h1 className="text-lg font-semibold text-gray-800">${item.price}</h1>
+                        <h1 className="text-lg font-semibold text-gray-800">{item.title}</h1>
                     </div>
 
-                ))}
+              
+            </Link>
+        ))}
 
         </div>
         </div> </div>

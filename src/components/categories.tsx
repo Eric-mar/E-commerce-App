@@ -1,26 +1,23 @@
 import {useState, useEffect} from 'react'
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 function Categories() {
  type items={
           id?: number,
-          title? : string,
-          price?: number;
-          images?: string,
-          email? : string,
-          role? : string
+      name?: string,
+      image?: string
       }
-      const [category,setCategory] = useState([])
+      const [categories,setCategories] = useState([])
   
       useEffect(()=>{
           const fetchingCategory = async()=>{
               try { 
-                  const res = await fetch(`https://api.escuelajs.co/api/v1/products`)
+                  const res = await fetch(`https://api.escuelajs.co/api/v1/categories`)
                   if(!res.ok){
                       throw new Error('Failed to fetch categories')
                   }
                   const data = await res.json()
-                  setCategory(data)
+                  setCategories(data)
                   console.log(data)
                   
               } catch (error) { console.log(error)
@@ -55,16 +52,19 @@ function Categories() {
           
     
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                  {category.map((item: items)=>( 
-                      <div key={item.id} className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden">
-                          <img src={item.images} width= '200'  className="w-full h-48 object-cover" />
+                  {categories.map((category: items)=>( 
+                    <Link key={category.id} to={`/products/${category.id}`} >
+                    
+                      <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden">
+                         <img src={category.image} 
+                          className="w-full h-48 object-cover" />
+                          <h1 className="text-lg font-semibold text-gray-800">{category.name}</h1>
 
-                          <h1 className="text-lg font-semibold text-gray-800">${item.price}</h1>
-                          <h1>{item.title}</h1>
-                          <h1>{item.role}</h1>
                       </div>
   
-                  ))}
+                  
+                </Link> ))}
+
   
           </div>
           </div> </div>

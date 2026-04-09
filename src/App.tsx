@@ -4,12 +4,13 @@ import Home from "./components/Home"
 import Products from "./components/Products"
 import Categories from "./components/categories"
 import ProtectedRoutes  from "./context/ProtectedRoutes"
-import { AuthContent } from "./context/Authorization"
+import {  Authorization } from "./context/Authorization"
+import ProductDetails from "./components/productDetails"
 
 function App() {
   return (
     <div>
-      <AuthContent>
+      {/* <Authorization>
       <BrowserRouter>
       <Routes>
         <Route path="/login" element= { <Login/>} />
@@ -17,10 +18,20 @@ function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="/categories" element={<Categories/>}/>
         <Route path="/products" element={<Products/>}/>
+        <Route path="/products/:id" element={<ProductDetails/>} />
 
         </Route>
         </Routes></BrowserRouter>
-      </AuthContent>
+      </Authorization> */}
+     <BrowserRouter>
+      <Routes>
+        
+        <Route path="/categories" element={<Categories />} />
+        <Route path="/products/:category" element={<Products />} />
+        <Route path="/products/:id" element={<ProductDetails />} />
+      </Routes>
+    </BrowserRouter>
+     
     </div>
   )
 }
