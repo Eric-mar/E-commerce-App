@@ -4,10 +4,12 @@ import Home from "./components/Home"
 import Products from "./components/Products"
 import Categories from "./components/categories"
 import ProtectedRoutes  from "./context/ProtectedRoutes"
+import { AuthContent } from "./context/Authorization"
 
 function App() {
   return (
     <div>
+      <AuthContent>
       <BrowserRouter>
       <Routes>
         <Route path="/login" element= { <Login/>} />
@@ -18,7 +20,7 @@ function App() {
 
         </Route>
         </Routes></BrowserRouter>
-      
+      </AuthContent>
     </div>
   )
 }

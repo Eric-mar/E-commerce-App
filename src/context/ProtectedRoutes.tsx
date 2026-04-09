@@ -1,7 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom"
-import { useAuth } from "./Authorization"
-
-
+import  useAuth  from "./Authorization"
 
 
  const ProtectedRoutes = ()=>{

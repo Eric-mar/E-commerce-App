@@ -1,5 +1,6 @@
 import {useState} from 'react'
-import { useNavigate } from "react-router-dom"
+import {useNavigate } from "react-router-dom"
+import useAuth from '../context/Authorization'
 
 function Login() {
   type FormErrors = {
@@ -7,9 +8,11 @@ function Login() {
         password?: string,
         userName?: string,
     }
+    const {login} = useAuth()
 
     const navigate = useNavigate()
-    const [loading,setLoading]= useState(true)
+
+    const [loading,setLoading]= useState(false)
     const [error , setError] = useState <FormErrors>({})
     const [form , setForm] = useState({
         userName: '',
@@ -48,9 +51,8 @@ return err
 
         const validate = handleErrors()
         setError(validate)
-        if( Object.keys(validate).length === 0 ){
-            console.log('Submit',form)
-        }
+        if( Object.keys(validate).length > 0 ) return 
+
         setLoading(true)
 
           try {
@@ -71,12 +73,12 @@ return err
          
             return 
         }
-         else if(exist){
-            alert `welcome back `
-             setTimeout(()=>{
-            navigate('/categories')
-          },1000)
-          }
+        alert (`welcome back `)
+        login()
+        navigate('/categories')
+
+        
+          
     }
         catch(error){
            console.error("Error fetching users:", error);
@@ -136,9 +138,9 @@ return err
 
     <button 
     className='bg-green-600 text-white p-2 m-4 rounded-2xl hover:bg-amber-500 font-bold '
-    name='submit'
     type='submit'
-    >LOGIN</button>
+    disabled={loading}
+    >{loading ? 'Loading...': 'LOGIN'}</button>
 </form>
 
 </fieldset>
