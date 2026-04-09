@@ -8,16 +8,17 @@ function Products() {
         price?: number
     }
     const {categoryId} = useParams()
-    const [product,setProduct] = useState([])
+    const [product,setProduct] = useState<item[]>([])
 
     useEffect(()=>{
         const fetchingProduct = async()=>{
             try { 
              let url = 'https://api.escuelajs.co/api/v1/products'
                if (categoryId) url += `?categoryId=${categoryId}`
-                const res = await fetch(`https://api.escuelajs.co/api/v1/categories/${categoryId}`)
+                const res = await fetch(url)
+
                 if(!res.ok){
-                    throw new Error('Failed to fetch Products')
+                    throw new Error('Failed to fetch categories')
                 }
                 const data = await res.json()
                 setProduct(data)
