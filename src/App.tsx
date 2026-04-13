@@ -8,6 +8,7 @@ import {  Authorization } from "./context/Authorization"
 import ProductDetails from "./components/productDetails"
 
 import Logout from "./components/Logout"
+import { ThemesContext } from "./context/themeContext"
 
 function App() {
   return (
@@ -28,14 +29,16 @@ function App() {
       </Authorization> */}
       
 
-    
+    <ThemesContext>
       <Routes>
+        <Route />
          <Route path="/products" element={<Products/>}/>
         <Route path="/categories" element={<Categories />} />
         <Route path="/products/:categoryId" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetails />} />
          <Route path="/logout" element={<Logout/>}/>
       </Routes>
+      </ThemesContext>
     
      
     </div>
