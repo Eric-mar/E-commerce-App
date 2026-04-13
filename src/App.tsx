@@ -7,12 +7,15 @@ import ProtectedRoutes  from "./context/ProtectedRoutes"
 import {  Authorization } from "./context/Authorization"
 import ProductDetails from "./components/productDetails"
 
+import Logout from "./components/Logout"
+
 function App() {
   return (
     <div>
+      <Home/>
       {/* <Authorization>
       <BrowserRouter>
-      <Routes>
+      <Routes>  
         <Route path="/login" element= { <Login/>} />
         <Route element={<ProtectedRoutes/>}>
         <Route path="/" element={<Home/>}/>
@@ -23,14 +26,17 @@ function App() {
         </Route>
         </Routes></BrowserRouter>
       </Authorization> */}
-     <BrowserRouter>
+      
+
+    
       <Routes>
-        
+         <Route path="/products" element={<Products/>}/>
         <Route path="/categories" element={<Categories />} />
         <Route path="/products/:categoryId" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetails />} />
+         <Route path="/logout" element={<Logout/>}/>
       </Routes>
-    </BrowserRouter>
+    
      
     </div>
   )

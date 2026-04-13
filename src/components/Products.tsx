@@ -1,14 +1,14 @@
 import  { useEffect, useState } from 'react'
-import { Link, NavLink, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 function Products() {
     type items={
-        id?: number,
-        title? : string,
-        images?: string,
-        price?: number
+        id: number,
+        title : string,
+        images: string,
+        price: number
     }
     const {categoryId} = useParams()
-    const [product,setProduct] = useState<item[]>([])
+    const [product,setProduct] = useState<items[]>([])
 
     useEffect(()=>{
         const fetchingProduct = async()=>{
@@ -25,9 +25,6 @@ function Products() {
 
                 console.log(data)
     
-
-   
-                
             } catch (error) { console.log(error)
                 
             }
@@ -38,26 +35,10 @@ function Products() {
   return (
     <>
 
-     <div className='bg-green-500 p-6 flex space-between   '>
-        <NavLink to='/'         
-        className={({isActive})=>isActive ? "bg-gray-400 flex-1 text-center ": "text-gray-500" }> Home </NavLink>
-
-        <NavLink to='/categories' 
-        className='m-4  hover:text-2md flex-1 hover:text-white hover:bg-amber-500 '  > Categories </NavLink>
-
-        <NavLink to='/products'  
-        className='m-4  hover:text-2md flex-1 hover:text-white hover:bg-amber-500 '> Products </NavLink>
-
-        <NavLink to='/login'    
-        className='m-4  hover:text-2md flex-1 hover:text-white hover:bg-amber-500 '> Login </NavLink>
-       
-    </div>
+     
 
     <div className="min-h-screen bg-gray-100">
         <div  className="max-w-7xl mx-auto p-6" >
-
-        
-  
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {product.map((item: items)=>( 
                     <Link to= {`/products/${item.id}`} key={item.id} >
